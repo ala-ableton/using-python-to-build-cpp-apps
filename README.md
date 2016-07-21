@@ -28,15 +28,15 @@ describes the essence of that design, so you can apply it to your own project.
 
 ## Agenda
 
-1. Ableton [[goto](https://youtu.be/CU178HUiPMA?t=2000)]
-2. Building *Live* with Python [[goto](https://youtu.be/CU178HUiPMA?t=2122)]
-3. *build-system*'s Hello World! [[goto](https://youtu.be/CU178HUiPMA?t=2335)]
-4. Building complex applications with *build-system* [[goto](https://youtu.be/CU178HUiPMA?t=2601)]
-5. Three scripts, one design [[goto](https://youtu.be/CU178HUiPMA?t=2671)]
-6. Fail early, loud and clear [[goto](https://youtu.be/CU178HUiPMA?t=2758)]
-7. Support custom defaults [[goto](https://youtu.be/CU178HUiPMA?t=2920)]
-8. Do not integrate project specific features [[goto](https://youtu.be/CU178HUiPMA?t=3082)]
-9. To wrap it up [[goto](https://youtu.be/CU178HUiPMA?t=3599)]
+1. Ableton [[goto](https://youtu.be/CU178HUiPMA?t=2004)]
+2. Building *Live* with Python [[goto](https://youtu.be/CU178HUiPMA?t=2124)]
+3. *build-system*'s Hello World! [[goto](https://youtu.be/CU178HUiPMA?t=2337)]
+4. Building complex applications with *build-system* [[goto](https://youtu.be/CU178HUiPMA?t=2603)]
+5. Three scripts, one design [[goto](https://youtu.be/CU178HUiPMA?t=2674)]
+6. Fail early, loud and clear [[goto](https://youtu.be/CU178HUiPMA?t=2760)]
+7. Support custom defaults [[goto](https://youtu.be/CU178HUiPMA?t=2922)]
+8. Do not integrate project specific features [[goto](https://youtu.be/CU178HUiPMA?t=3084)]
+9. To wrap it up [[goto](https://youtu.be/CU178HUiPMA?t=3601)]
 
 
 [EuroPython 2016]: https://ep2016.europython.eu/en/
