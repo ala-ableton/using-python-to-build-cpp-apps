@@ -4,13 +4,27 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <title>reveal.js</title>
+        <title>Python as the keystone of building and testing C++ applications</title>
 
         <link rel="stylesheet" href="css/reveal.css">
         <link rel="stylesheet" href="css/theme/black.css">
 
         <!-- Theme used for syntax highlighting of code -->
         <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <style>
+            rect {
+                fill: #fff;
+            }
+
+            .reveal pre code {
+                max-height: 768px;
+            }
+
+            mark {
+                background-color: #7f9f7f;
+            }
+        </style>
 
         <!-- Printing and PDF exports -->
         <script>
@@ -24,8 +38,916 @@
     <body>
         <div class="reveal">
             <div class="slides">
-                <section>Slide 1</section>
-                <section>Slide 2</section>
+
+<section data-background="#222222">
+    <h1>Python as the keystone of building and testing C++ applications</h1>
+</section>
+
+
+<section data-background="#182A2A"><!-- Ableton -->
+
+<section>
+    <h2>Ableton</h2>
+    <svg width="90px" height="42px">
+        <g>
+            <rect x="0"  width="6" height="42"></rect>
+            <rect x="12" width="6" height="42"></rect>
+            <rect x="24" width="6" height="42"></rect>
+            <rect x="36" width="6" height="42"></rect>
+        </g>
+        <g>
+            <rect x="48" y="36" width="42" height="6"></rect>
+            <rect x="48" y="24" width="42" height="6"></rect>
+            <rect x="48" y="12" width="42" height="6"></rect>
+            <rect x="48" y="0"  width="42" height="6"></rect>
+        </g>
+    </svg>
+    <p>Berlin, Germany</p>
+</section>
+
+<section>
+    <h3>At Ableton</h3>
+    <blockquote cite="https://www.ableton.com/en/about/">
+        &ldquo;We make Live, Push and Link — unique software and hardware for music
+        creation and performance.&rdquo;
+        <br/><small>ableton.com</small>
+    </blockquote>
+</section>
+
+<section data-background-image="img/Live.png" data-background-transition="slide">
+</section>
+
+<section data-background-image="img/Live_darker.png" data-background-transition="none">
+    <p>&nbsp;</p>
+    <h3>Live</h3>
+    <p class="fragment">Multi-platform C++ desktop application</p>
+</section>
+
+<section data-background-image="img/Push2.png" data-background-transition="slide">
+</section>
+
+<section data-background-image="img/Push2_darker.png" data-background-transition="none">
+    <p>&nbsp;</p>
+    <h3>Push</h3>
+    <p class="fragment">Rendering a Qt Quick scene on the display</p>
+</section>
+
+<section data-background-image="img/Link.png" data-background-transition="slide">
+</section>
+
+<section data-background-image="img/Link_darker.png" data-background-transition="none">
+    <p>&nbsp;</p>
+    <h3>Link</h3>
+    <p class="fragment">Available to developers as an iOS SDK</p>
+</section>
+
+<section data-background-image="http://i.giphy.com/rCAVWjzASyNlm.gif">
+    <h3>Python?</h3>
+
+    <!-- GIPHY: https://giphy.com/gifs/confused-lego-travolta-rCAVWjzASyNlm -->
+    <!-- Source: http://www.reddit.com/r/funny/comments/3vdqgi/lego_confused_travolta/ -->
+</section>
+
+<section>
+    <h3>Python at Ableton</h3>
+    <ul>
+        <li class="fragment">Remote Scripts for MIDI controllers</li>
+        <li class="fragment">Continuous Integration and release management</li>
+        <li class="fragment">Building and testing C++ applications</li>
+    </ul>
+</section>
+
+</section><!-- Ableton -->
+
+
+<section data-background="#2A182A"><!-- Building Live with Python -->
+
+<section>
+    <h2>Building <i>Live</i> with Python</h2>
+</section>
+
+<section>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>Building C++ applications</h3>
+    <ol>
+        <li class="fragment">Source files</li>
+        <li class="fragment">Object files</li>
+        <li class="fragment">Static and dynamically-linked libraries, and executables</li>
+    </ol>
+    <p>&nbsp;</p>
+    <p class="fragment">1440 source files are compiled into 88 libraries and 8 executables when building Live</p>
+</section>
+
+<section>
+    <h3>Build system tools</h3>
+    <ul>
+        <li>make (Makefiles)</li>
+        <li>MSBuild (Visual Studio projects)</li>
+        <li>xcodebuild (Xcode projects)</li>
+        <li>...</li>
+    </ul>
+</section>
+
+<section>
+    <h3>GYP</h3>
+    <p>Generate Your Projects</p>
+    <ul>
+        <li class="fragment">Generates
+            <ul>
+                <li>Makefiles</li>
+                <li>Ninja build files</li>
+                <li>Visual Studio projects</li>
+                <li>Xcode projects</li>
+            </ul>
+        </li>
+        <li class="fragment">Written in Python!</li>
+        <li class="fragment">Used for building Chromium, Electron, Node.js, V8, ...</li>
+    </ul>
+    <p class="fragment">Integrated in the <i>live</i> repository</p>
+</section>
+
+<section data-transition="slide-in none-out">
+    <h3>The <i>live</i> repository</h3>
+    <pre><code class="sh" data-noescape>
+    live/
+    │
+    ├── modules/
+    │   └── build-system/  # git submodule
+    │
+    │
+    │
+    │
+    │
+    │
+    │
+    │
+    │
+    └── Live.gyp
+    </code></pre>
+</section>
+
+<section data-transition="none-in slide-out">
+    <h3>The <i>build-system</i> repository</h3>
+    <pre><code class="sh" data-noescape>
+    live/
+    │
+    ├── modules/
+    │   └── build-system/  # git submodule
+    │       <span class="fragment" data-fragment-index="0">│                             </span>
+    │       <span class="fragment" data-fragment-index="0">├── modules/                  </span>
+    │       <span class="fragment" data-fragment-index="0">│   └── gyp/   # git submodule</span>
+    │       <span class="fragment" data-fragment-index="1">│           </span>
+    │       <span class="fragment" data-fragment-index="1">└── scripts/</span>
+    │       <span class="fragment" data-fragment-index="2">    ├── configure.py  # calls GYP</span>
+    │       <span class="fragment" data-fragment-index="3">    ├── build.py  # calls MSBuild, Ninja or xcodebuild</span>
+    │       <span class="fragment" data-fragment-index="4">    └── run.py  # calls C++ test runners or Qt-specific tools</span>
+    │
+    └── Live.gyp
+    </code></pre>
+</section>
+
+</section><!-- Building Live with Python -->
+
+
+<section data-background="#182A18"><!-- build-system's Hello World! -->
+
+<section>
+    <h2><i>build-system</i>'s Hello World!</h2>
+</section>
+
+<section>
+    <p><i>HelloWorld</i> project</p>
+    <pre><code class="python" data-noescape>
+    HelloWorld/
+    │
+    <span class="fragment" data-fragment-index="0">├── build-system/  # git submodule</span>
+    <span class="fragment" data-fragment-index="0">│   └── scripts/                  </span>
+    <span class="fragment" data-fragment-index="0">│       ├── configure.py          </span>
+    <span class="fragment" data-fragment-index="0">│       ├── build.py              </span>
+    <span class="fragment" data-fragment-index="0">│       └── run.py                </span>
+    <span class="fragment" data-fragment-index="1">│                                 </span>
+    <span class="fragment" data-fragment-index="1">├</span><span class="fragment" data-fragment-index="2">── src/              </span>
+    <span class="fragment" data-fragment-index="1">│</span><span class="fragment" data-fragment-index="2">   └── HelloWorld.cpp</span>
+    <span class="fragment" data-fragment-index="1">│</span><span class="fragment" data-fragment-index="2">                     </span>
+    <span class="fragment" data-fragment-index="1">├</span><span class="fragment" data-fragment-index="3">── test/                                             </span>
+    <span class="fragment" data-fragment-index="1">│</span><span class="fragment" data-fragment-index="3">   ├── catch.hpp  # from github.com/philsquared/Catch</span>
+    <span class="fragment" data-fragment-index="1">│</span><span class="fragment" data-fragment-index="3">   └── tst_HelloWorld.cpp                            </span>
+    <span class="fragment" data-fragment-index="1">│</span>
+    <span class="fragment" data-fragment-index="1">└── HelloWorld.gyp</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>HelloWorld.gyp</p>
+    <pre><code class="gyp">
+    {
+        'targets': [
+            {
+                'target_name': 'HelloWorld',
+                'type': 'executable',
+
+                'sources': [
+                    'src/HelloWorld.cpp',
+                ],
+            },
+            {
+                'target_name': 'HelloWorldTest',
+                'type': 'executable',
+
+                'sources': [
+                    'test/tst_HelloWorld.cpp',
+                ],
+            },
+        ],
+    }
+    </code></pre>
+</section>
+
+<section>
+    <p>HelloWorld.cpp</p>
+    <pre><code class="cpp">
+    #include &lt;iostream&gt;
+
+    int main()
+    {
+        std::cout &lt;&lt; "Hello World!" &lt;&lt; std::endl;
+
+        return 0;
+    }
+    </code></pre>
+</section>
+
+<section>
+    <p>tst_HelloWorld.cpp</p>
+    <pre><code class="cpp">
+    #define CATCH_CONFIG_MAIN
+    #include "catch.hpp"
+
+
+    TEST_CASE("Hello World!")
+    {
+        CHECK(true);
+    }
+    </code></pre>
+</section>
+
+<section>
+    <p>Configure</p>
+    <pre><code class="sh" data-noescape>
+    $ python build-system/scripts/configure.py
+
+    <span class="fragment" data-fragment-index="0">Generating projects from HelloWorld.gyp (win, 64, dll)</span>
+    </code></pre>
+    <pre><code class="python" data-noescape>
+    HelloWorld/
+    │
+    ├── build-system/
+    │
+    ├<span class="fragment" data-fragment-index="1">── ide/</span>
+    │<span class="fragment" data-fragment-index="1">   └── win_64_dll/</span>
+    │<span class="fragment" data-fragment-index="1">       ├── HelloWorld.sln</span>
+    │<span class="fragment" data-fragment-index="1">       ├── HelloWorld.vcxproj</span>
+    │<span class="fragment" data-fragment-index="1">       └── HelloWorldTest.vcxproj</span>
+    │
+    ├── src/
+    ├── test/
+    └── HelloWorld.gyp
+    </code></pre>
+</section>
+
+<section data-transition="slide-in none-out">
+    <p>Build</p>
+    <pre><code class="sh" data-noescape>
+    $ python build-system/scripts/build.py
+
+    <span class="fragment">Building All targets from ide\win_64_dll\HelloWorld.sln (Debug)</span>
+
+    <span class="fragment">Microsoft (R) Build Engine version 12.0.40629.0
+    [Microsoft .NET Framework, version 4.0.30319.42000]
+    Copyright (C) Microsoft Corporation. All rights reserved.
+
+    HelloWorld.cpp
+    HelloWorld.vcxproj -> ..\..\output\win_64_dll\Debug\HelloWorld.exe
+    tst_HelloWorld.cpp
+    HelloWorldTest.vcxproj -> ..\..\output\win_64_dll\Debug\HelloWorldTest.exe</span>
+
+    <span class="fragment">Built All targets from ide\win_64_dll\HelloWorld.sln (Debug)</span>
+    </code></pre>
+</section>
+
+<section data-transition="none-in slide-out">
+    <p>Build</p>
+    <pre><code class="python" data-noescape>
+    HelloWorld/
+    │
+    ├── build-system/
+    ├── ide/
+    │
+    ├<span class="fragment" data-fragment-index="0">── output/</span>
+    │<span class="fragment" data-fragment-index="0">   └── win_64_dll/</span>
+    │<span class="fragment" data-fragment-index="0">       └── Debug/</span>
+    │<span class="fragment" data-fragment-index="0">           ├── HelloWorld.exe</span>
+    │<span class="fragment" data-fragment-index="0">           └── HelloWorldTest.exe</span>
+    │
+    ├── src/
+    ├── test/
+    └── HelloWorld.gyp
+    </code></pre>
+</section>
+
+<section>
+    <p>Bonjour le monde!</p>
+    <pre><code class="sh" data-noescape>
+    $ ./output/win_64_dll/Debug/HelloWorld.exe
+
+    <span class="fragment">Hello World!</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>Run C++ tests</p>
+    <pre><code class="sh" data-noescape>
+    $ python build-system/scripts/run.py cpptest
+
+    <span class="fragment">Running output\win_64_dll\Debug\HelloWorldTest.exe
+    ========================================================================
+    All tests passed (1 assertion in 1 test case)</span>
+
+
+    <span class="fragment">1 PASSED TEST SUITE
+     * output\win_64_dll\Debug\HelloWorldTest.exe
+
+    0 FAILED TEST SUITES
+
+    SUCCESS</span>
+    </code></pre>
+</section>
+
+</section><!-- build-system's Hello World! -->
+
+
+<section data-background="#18182A"><!-- Building complex applications with build-system -->
+
+<section>
+    <h2>Building complex applications with <i>build-system</i></h2>
+</section>
+
+<section>
+    <h3>Building <i>Live</i> with <i>build-system</i></h3>
+    <p>Compared to the HelloWorld project</p>
+    <ul>
+        <li class="fragment">There are a lot more files</li>
+        <li class="fragment">It takes much more time</li>
+        <li class="fragment">But, it works in the exact same way!</li>
+    </ul>
+    <p class="fragment">Simply call: <span class="fragment">configure.py</span><span class="fragment">, build.py</span><span class="fragment">, run.py</span></p>
+</section>
+
+<section>
+    <h3>Only three scripts to call</h3>
+    <p class="fragment">Doesn't guarantee that they are easy to <br />use, maintain and extend</p>
+    <p class="fragment">It could still be a mess</p>
+</section>
+
+<section data-background-image="http://i.giphy.com/ReImZejkBnqYU.gif">
+    <h3>What if it was a mess?</h3>
+
+    <!-- GIPHY: https://giphy.com/gifs/angry-computer-frustrated-ReImZejkBnqYU -->
+    <!-- Source: http://www.gifbay.com/gif/sometimes-50981/ -->
+</section>
+
+</section><!-- Building complex applications with build-system -->
+
+
+<section data-background="#2A1818"><!-- Three scripts, one design -->
+
+<section>
+    <h2>Three scripts, one design</h2>
+</section>
+
+<section>
+    <h3>Common architecture</h3>
+    <p class="fragment">Based solely on Python's standard library</p>
+    <pre class="fragment"><code class="python">
+    import argparse
+    import logging
+    import subprocess
+    </code></pre>
+    <ol>
+        <li class="fragment">Parse the arguments</li>
+            <ul>
+                <li class="fragment">Find the project GYP file</li>
+            </ul>
+        </li>
+        <li class="fragment">Figure out what the user wants to do</li>
+        <li class="fragment">Do it!</li>
+    </ol>
+</section>
+
+<section>
+    <h3>Common design</h3>
+    <p class="fragment">Composed of several design principles</p>
+    <p class="fragment">Make the scripts easier to use, maintain and extend</p>
+    <p class="fragment">Can be applied to your own scripts</p>
+</section>
+
+</section><!-- Three scripts, one design -->
+
+
+<section data-background="#18182A"><!-- Fail early, loud and clear -->
+
+<section>
+    <h2>Fail early, loud and clear</h2>
+</section>
+
+<section>
+    <p>Counting entries in a given directory</p>
+    <pre><code class="python" data-noescape>
+    import argparse
+    <span class="fragment" data-fragment-index="1">import os</span>
+
+
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument('--target-dir')
+
+    <span class="fragment" data-fragment-index="0">args = arg_parser.parse_args()</span>
+    <span class="fragment" data-fragment-index="0">target_dir = args.target_dir</span>
+
+    <span class="fragment" data-fragment-index="1">num_entries = len(os.listdir(target_dir))</span>
+    <span class="fragment" data-fragment-index="2">print('There are {} entries in {}'.format(num_entries, target_dir))</span>
+    </code></pre>
+
+    <pre class="fragment"><code class="sh" data-noescape>
+    $ python count-entries.py --target-dir HelloWorld/
+
+    <span class="fragment">There are 6 entries in HelloWorld/</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>Counting entries in a non-existing directory</p>
+    <pre><code class="sh" data-noescape>
+    $ python count-entries.py --target-dir Nope/
+
+    <span class="fragment">Traceback (most recent call last):
+      File "count-entries.py", line 11, in &lt;module&gt;
+        num_entries = len(os.listdir(target_dir))
+    WindowsError: [Error 3] The system cannot find the path specified:
+     'Nope/*.*'</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>Check the argument type as early as possible</p>
+    <pre><code class="python" data-noescape>
+    import argparse
+    import os
+
+<span class="fragment"><mark>+</mark>   def existing_dir(path):
+<mark>+</mark>       if not os.path.isdir(path):
+<mark>+</mark>           raise argparse.ArgumentTypeError('No such directory: ' + path)
+<mark>+</mark>       return path
+<mark>+</mark></span>
+
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument('--target-dir'<mark class="fragment">, type=existing_dir</mark>)
+
+    args = arg_parser.parse_args()
+    target_dir = args.target_dir
+
+    num_entries = len(os.listdir(target_dir))
+    print('There are {} entries in {}'.format(num_entries, target_dir))
+    </code></pre>
+    <pre class="fragment"><code class="sh" data-noescape>
+    $ python count-entries-fail-early.py --target-dir HelloWorld/
+
+    <span class="fragment">There are 6 entries in HelloWorld/</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>Fail early, loud and clear</p>
+
+    <pre><code class="sh" data-noescape>
+    $ python count-entries-fail-early.py --target-dir Nope/
+
+    <span class="fragment">usage: count-entries-fail-early.py [-h] [--target-dir TARGET_DIR]
+    count-entries-fail-early.py: error: argument --target-dir: No such
+     directory: Nope/</span>
+    </code></pre>
+</section>
+
+</section><!-- Fail early, loud and clear -->
+
+
+<section data-background="#182A18"><!-- Support custom defaults -->
+
+<section>
+    <h2>Support custom defaults</h2>
+</section>
+
+<section>
+    <p>Building with Ninja</p>
+    <pre><code class="sh" data-noescape>
+    $ python build-system/scripts/configure.py --ninja
+
+    <span class="fragment">Generating projects from HelloWorld.gyp (win, 64, dll, ninja)</span>
+    </code></pre>
+    <pre class="fragment"><code class="python" data-noescape>
+    $ python build-system/scripts/build.py --ninja
+
+    <span class="fragment">ninja: Entering directory `output\win_64_dll\Debug`
+    [1/4] CXX obj\src\HelloWorld.HelloWorld.obj
+    [2/4] LINK_EMBED HelloWorld.exe
+    [3/4] CXX obj\test\HelloWorldTest.tst_HelloWorld.obj
+    [4/4] LINK_EMBED HelloWorldTest.exe</span>
+    </code></pre>
+    <pre class="fragment"><code class="sh" data-noescape>
+    $ ./output/win_64_dll/Debug/HelloWorld.exe
+
+    <span class="fragment">Hello World!</span>
+    </code></pre>
+</section>
+
+<section>
+    <p><i>build-system.rc</i> files</p>
+
+    <pre><code class="python">
+    $ cat ~/.ableton/build-system.rc
+
+    {
+        'configure': [
+            '--ninja',
+        ],
+
+        'build': [
+            '--ninja',
+        ],
+
+        'run': [
+        ],
+    }
+    </code></pre>
+
+    <pre class="fragment"><code class="python" data-noescape>
+    <span class="fragment">1. ~/.ableton/build-system.rc (per user)</span>
+    <span class="fragment">2. &lt;Project&gt;/build-system/build-system.rc (per project, .gitignored)</span>
+    <span class="fragment">3. command line</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>Building with Ninja by default</p>
+    <pre><code class="sh" data-noescape>
+    $ python build-system/scripts/configure.py
+
+    <span class="fragment">Generating projects from HelloWorld.gyp (win, 64, dll, ninja)</span>
+    </code></pre>
+    <pre class="fragment"><code class="python" data-noescape>
+    $ python build-system/scripts/build.py
+
+    <span class="fragment">ninja: Entering directory `output\win_64_dll\Debug`
+    [1/4] CXX obj\src\HelloWorld.HelloWorld.obj
+    [2/4] LINK_EMBED HelloWorld.exe
+    [3/4] CXX obj\test\HelloWorldTest.tst_HelloWorld.obj
+    [4/4] LINK_EMBED HelloWorldTest.exe</span>
+    </code></pre>
+</section>
+
+</section><!-- Support custom defaults -->
+
+
+<section data-background="#2A182A"><!-- Do not integrate project specific features -->
+
+<section>
+    <h2>Do not integrate project specific features</h2>
+</section>
+
+<section data-transition="slide-in none-out">
+    <p><i>build-system</i> repository</p>
+    <pre><code class="sh" data-noescape>
+    build-system/
+    │
+    <span class="fragment" data-fragment-index="0">├── modules/</span>
+    <span class="fragment" data-fragment-index="0">│   └── gyp/</span>
+    <span class="fragment" data-fragment-index="0">│</span>
+    <span class="fragment" data-fragment-index="1">└── scripts/</span>
+    <span class="fragment" data-fragment-index="1">    ├</span><span class="fragment" data-fragment-index="2">── build_system/</span>
+    <span class="fragment" data-fragment-index="1">    │</span><span class="fragment" data-fragment-index="2">   ├── __init__.py</span>
+    <span class="fragment" data-fragment-index="1">    │</span><span class="fragment" data-fragment-index="3">   ├── arg_utils.py      # existing_dir()</span>
+    <span class="fragment" data-fragment-index="1">    │</span><span class="fragment" data-fragment-index="4">   ├── constants.py      # get_default_platform()</span>
+    <span class="fragment" data-fragment-index="1">    │</span><span class="fragment" data-fragment-index="5">   └── path_defaults.py  # gyp_file_path()</span>
+    <span class="fragment" data-fragment-index="1">    │</span>
+    <span class="fragment" data-fragment-index="1">    ├── configure.py</span>
+    <span class="fragment" data-fragment-index="1">    ├── build.py</span>
+    <span class="fragment" data-fragment-index="1">    └── run.py</span>
+
+    </code></pre>
+</section>
+
+<section data-transition="none-in slide-out">
+    <p><i>build-system</i> repository</p>
+    <pre><code class="sh">
+    build-system/
+    │
+    ├── modules/
+    │   └── gyp/
+    │
+    └── scripts/
+        ├── build_system/
+        │   ├── __init__.py
+        │   ├── arg_utils.py      # existing_dir()
+        │   ├── constants.py      # get_default_platform()
+        │   └── path_defaults.py  # gyp_file_path()
+        │
+        ├── configure.py
+        ├── build.py
+        ├── run.py
+        └── simple-arg-parser.py
+    </code></pre>
+</section>
+
+<section>
+    <p>simple-arg-parser.py</p>
+    <pre><code class="python">
+    import argparse
+
+    from build_system import constants
+
+
+    arg_parser = argparse.ArgumentParser()
+
+    arg_parser.add_argument('--platform', choices=['mac', 'win'],
+                            default=constants.get_default_platform())
+    arg_parser.add_argument('--wordsize', choices=['32', '64'],
+                            default='64')
+    arg_parser.add_argument('--linking', choices=['dll', 'static'],
+                            default='dll')
+
+    print(arg_parser.parse_args())
+    </code></pre>
+    <pre class="fragment"><code class="python" data-noescape>
+    $ python simple-arg-parser.py
+
+    <span class="fragment">Namespace(linking='dll', platform='win', wordsize='64')</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>Project specific argument</p>
+    <pre><code class="python">
+    HelloWorld/
+    ├── build-system/
+    │   └── scripts/
+    │       ├── configure.py
+    │       ├── build.py
+    │       ├── run.py
+    │       └── simple-arg-parser.py
+    ├── src/
+    ├── test/
+    └── HelloWorld.gyp
+    </code></pre>
+
+    <pre class="fragment"><code class="sh" data-noescape>
+    $ python build-system/scripts/simple-arg-parser.py --lang=es
+
+    <span class="fragment">usage: simple-arg-parser.py [-h] [--platform {mac,win}]
+                                [--wordsize {32,64}]
+                                [--linking {dll,static}]
+    simple-arg-parser.py: error: unrecognized arguments: --lang=es</span>
+    </code></pre>
+
+    <p class="fragment">Can we add it to <i>build-system</i>?</p>
+</section>
+
+<section data-background-image="http://i.giphy.com/3o85xlDHNGjSuBkbkc.gif">
+
+    <!-- GIPHY: https://giphy.com/gifs/no-jurassic-park-raptor-3o85xlDHNGjSuBkbkc -->
+    <!-- Source: https://www.youtube.com/watch?v=PluT-QbeL9s -->
+</section>
+
+<section>
+    <h3>Do not integrate project specific features</h3>
+    <p class="fragment">Adds maintenance cost</p>
+    <p class="fragment">Leads to API breaking changes</p>
+</section>
+
+<section>
+    <p>Extending the script</p>
+    <pre><code class="python" data-noescape>
+    import argparse
+
+    from build_system import constants<mark class="fragment">, script_extensions</mark>
+
+
+<span class="fragment"><mark>+</mark>   extension = script_extensions.get_script_extension('simple_arg_parser', {
+<mark>+</mark>       'extend_arg_parser_before': lambda parser: None,
+<mark>+</mark>       'extend_arg_parser_after': lambda parser: None,
+<mark>+</mark>   })
+<mark>+</mark></span>
+    arg_parser = argparse.ArgumentParser()
+
+<span class="fragment"><mark>+</mark>   extension.extend_arg_parser_before(arg_parser)
+<mark>+</mark></span>
+    arg_parser.add_argument('--platform', choices=['mac', 'win'],
+                            default=constants.get_default_platform())
+    arg_parser.add_argument('--wordsize', choices=['32', '64'],
+                            default='64')
+    arg_parser.add_argument('--linking', choices=['dll', 'static'],
+                            default='dll')
+
+<span class="fragment"><mark>+</mark>   extension.extend_arg_parser_after(arg_parser)
+<mark>+</mark></span>
+    print(arg_parser.parse_args())
+    </code></pre>
+</section>
+
+<section data-transition="slide-in none-out">
+    <p>Using the extension mechanism in the project</p>
+    <pre><code class="python" data-noescape>
+    HelloWorld/
+    ├── build-system/
+    │   └── scripts/
+    │       ├── configure.py
+    │       ├── build.py
+    │       ├── run.py
+    │       └── simple-arg-parser.py
+    │
+    ├<span class="fragment" data-fragment-index="0">── build_system_extensions/</span>
+    │<span class="fragment" data-fragment-index="0">   ├── __init__.py</span>
+    │<span class="fragment" data-fragment-index="1">   └── simple_arg_parser.py</span>
+    │
+    ├── src/
+    ├── test/
+    └── HelloWorld.gyp
+    </code></pre>
+
+    <p class="fragment" data-fragment-index="1">simple_arg_parser.py</p>
+    <pre class="fragment" data-fragment-index="1"><code class="python">
+    def extend_arg_parser_after(arg_parser):
+        arg_parser.add_argument('--lang', default='en')
+    </code></pre>
+</section>
+
+<section data-transition="none-in slide-out">
+    <p>Using the extension mechanism in the project</p>
+    <pre><code class="python">
+    HelloWorld/
+    ├── build-system/
+    │   └── scripts/
+    │       ├── configure.py
+    │       ├── build.py
+    │       ├── run.py
+    │       └── simple-arg-parser.py
+    │
+    ├── build_system_extensions/
+    │   ├── __init__.py
+    │   └── simple_arg_parser.py
+    │
+    ├── src/
+    ├── test/
+    └── HelloWorld.gyp
+    </code></pre>
+
+    <p>&nbsp;</p>
+    <pre><code class="python" data-noescape>
+    $ python build-system/scripts/simple-arg-parser.py --lang=es
+
+    <span class="fragment">Namespace(lang='es', linking='dll', platform='win', wordsize='64')</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>Extending the script</p>
+    <pre><code class="python" data-noescape>
+    HelloWorld/
+    ├── build-system/
+    │   └── scripts/
+    │       ├── build_system/
+    │       │   ├── __init__.py
+    │       │   ├── arg_utils.py            # existing_dir()
+    │       │   ├── constants.py            # get_default_platform()
+    │       │   ├── path_defaults.py        # gyp_file_path()
+    │       │   <span class="fragment">└── script_extensions.py    # get_script_extension()</span>
+    │       │
+    │       ├── configure.py
+    │       ├── build.py
+    │       ├── run.py
+    │       └── simple-arg-parser.py
+    │
+    ├── build_system_extensions/
+    │   ├── __init__.py
+    │   └── simple_arg_parser.py
+    │
+    ├── src/
+    ├── test/
+    └── HelloWorld.gyp
+    </code></pre>
+</section>
+
+<section>
+    <p>Extending the script</p>
+    <pre><code class="python">
+    from build_system import script_extensions
+
+
+    extension = script_extensions.get_script_extension(
+        script_name='simple_arg_parser',
+        minimal_api={
+            'extend_arg_parser_before': lambda arg_parser: None,
+            'extend_arg_parser_after': lambda arg_parser: None,
+        })
+    </code></pre>
+</section>
+
+<section>
+    <p>Importing a Python module "manually"</p>
+    <pre><code class="python" data-noescape>
+    import imp
+
+
+    def find_and_load_module(name, paths):
+        try:
+            found_module = imp.find_module(name, paths)
+
+    <span class="fragment" data-fragment-index="0">        if found_module:</span>
+    <span class="fragment" data-fragment-index="1">            module_file, module_path, module_desc = found_module</span>
+    <span class="fragment" data-fragment-index="1">            try:</span>
+    <span class="fragment" data-fragment-index="0">                return imp.load_module(name, *found_module)</span>
+    <span class="fragment" data-fragment-index="1">            finally:</span>
+    <span class="fragment" data-fragment-index="1">                if module_file is not None:</span>
+    <span class="fragment" data-fragment-index="1">                    module_file.close()</span>
+
+        except ImportError:
+            return None
+    </code></pre>
+</section>
+
+<section>
+    <p>Creating the script extension</p>
+    <pre><code class="python" data-noescape><span class="fragment" data-fragment-index="0">
+    def get_script_extension(script_name, minimal_api):
+        script_extension = None
+    </span><span class="fragment">
+        extensions_module = find_and_load_module(
+            'build_system_extensions', _all_parent_folders(os.path.curdir))
+    </span><span class="fragment">
+        if extensions_module:
+            script_extension = find_and_load_module(
+                script_name, extensions_module.__path__)
+    </span><span class="fragment">
+        if script_extension is None:
+            script_extension = object()
+    </span><span class="fragment">
+        for attr in minimal_api:
+            if not hasattr(script_extension, attr):
+                setattr(script_extension, attr, minimal_api[attr])
+    </span><span class="fragment" data-fragment-index="0">
+        return script_extension
+    </span></code></pre>
+</section>
+
+</section><!-- Do not integrate project specific features -->
+
+
+<section data-background="#182A2A"><!-- To wrap it up -->
+
+<section>
+    <h2>To wrap it up</h2>
+</section>
+
+<section>
+    <h3>Building <i>Live</i> with Python</h3>
+    <p class="fragment">Python is indeed the keystone</p>
+    <blockquote cite="myself" class="fragment">
+        &ldquo;Without Python, nobody can work on Live.&rdquo;
+        <small>Myself, 2 seconds ago</small>
+    </blockquote>
+</section>
+
+<section>
+    <h3>Design principles</h3>
+    <p class="fragment">Having some is good</p>
+    <p class="fragment">Knowing and sharing them is better</p>
+</section>
+
+<section data-background-image="http://i.giphy.com/VerIk7pS3iEEg.gif">
+    <h3>Make the users of your scripts happy</h3>
+
+    <!-- GIPHY: https://giphy.com/gifs/thelegomovie-movie-coffee-lego-VerIk7pS3iEEg -->
+    <!-- Source: http://legomovie.tumblr.com/post/67784418684 -->
+</section>
+
+</section><!-- To wrap it up -->
+
+
+<section data-background="#222222">
+    <p>Thank you for your attention</p>
+    <p class="fragment">Questions?</p>
+    <p class="fragment">@AbletonDev</p>
+</section>
+
             </div>
         </div>
 
@@ -35,6 +957,9 @@
         <script>
             // More info https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
+                width: 1024,
+                height: 768,
+
                 history: true,
 
                 // More info https://github.com/hakimel/reveal.js#dependencies
