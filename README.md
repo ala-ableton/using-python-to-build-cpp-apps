@@ -4,7 +4,7 @@
 ## EuroPython 2016
 
 This talk was given at [EuroPython 2016][EuroPython 2016]. It was recorded and
-is available on [YouTube](https://youtu.be/CU178HUiPMA?t=2000).
+is available on [YouTube](https://youtu.be/zZPGRV5Kw70).
 
 
 ## Abstract
@@ -28,15 +28,15 @@ describes the essence of that design, so you can apply it to your own project.
 
 ## Agenda
 
-1. Ableton [[goto](https://youtu.be/CU178HUiPMA?t=2004)]
-2. Building *Live* with Python [[goto](https://youtu.be/CU178HUiPMA?t=2124)]
-3. *build-system*'s Hello World! [[goto](https://youtu.be/CU178HUiPMA?t=2337)]
-4. Building complex applications with *build-system* [[goto](https://youtu.be/CU178HUiPMA?t=2603)]
-5. Three scripts, one design [[goto](https://youtu.be/CU178HUiPMA?t=2674)]
-6. Fail early, loud and clear [[goto](https://youtu.be/CU178HUiPMA?t=2760)]
-7. Support custom defaults [[goto](https://youtu.be/CU178HUiPMA?t=2922)]
-8. Do not integrate project specific features [[goto](https://youtu.be/CU178HUiPMA?t=3084)]
-9. To wrap it up [[goto](https://youtu.be/CU178HUiPMA?t=3601)]
+1. Ableton [[goto](https://youtu.be/zZPGRV5Kw70?t=25)]
+2. Building *Live* with Python [[goto](https://youtu.be/zZPGRV5Kw70?t=146)]
+3. *build-system*'s Hello World! [[goto](https://youtu.be/zZPGRV5Kw70?t=359)]
+4. Building complex applications with *build-system* [[goto](https://youtu.be/zZPGRV5Kw70?t=626)]
+5. Three scripts, one design [[goto](https://youtu.be/zZPGRV5Kw70?t=696)]
+6. Fail early, loud and clear [[goto](https://youtu.be/zZPGRV5Kw70?t=783)]
+7. Support custom defaults [[goto](https://youtu.be/zZPGRV5Kw70?t=944)]
+8. Do not integrate project specific features [[goto](https://youtu.be/zZPGRV5Kw70?t=1106)]
+9. To wrap it up [[goto](https://youtu.be/zZPGRV5Kw70?t=1623)]
 
 
 [EuroPython 2016]: https://ep2016.europython.eu/en/
